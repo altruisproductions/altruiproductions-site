@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Altruistudios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 50% 24%, rgba(58, 74, 105, 0.26), transparent 34%),
+        linear-gradient(135deg, #080b12, #020409 58%, #090b10);
+      color: #f5f7fb;
+      font-family: "Inter", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 34%, rgba(0, 0, 0, 0.36)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 120px);
+      pointer-events: none;
+    }
+
+    body.privacy-open .studio-home {
+      filter: blur(12px);
+      transform: scale(0.985);
+    }
+
+    body.privacy-open .home-legal {
+      filter: blur(12px);
+      transform: translateX(-50%) scale(0.985);
+    }
+
+    .studio-home {
+      position: relative;
+      z-index: 1;
+      width: min(960px, calc(100vw - 32px));
+      min-height: min(720px, calc(100vh - 32px));
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 2.6rem;
+      padding: clamp(2rem, 6vw, 5rem);
+      text-align: center;
+    }
+
+    .studio-mark {
+      width: min(420px, 78vw);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 22px 52px rgba(0, 0, 0, 0.48));
+      transform: translate3d(var(--logo-x, 0), var(--logo-y, 0), 0) rotateY(var(--logo-ry, 0deg)) rotateX(var(--logo-rx, 0deg));
+      transition: transform 0.18s ease-out;
+      will-change: transform;
+    }
+
+    .studio-copy {
+      max-width: 720px;
+    }
+
+    .studio-kicker {
+      margin: 0 0 0.75rem;
+      color: #9fb5d9;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .studio-copy p {
+      max-width: 38rem;
+      margin: 0;
+      color: #d6ddeb;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .project-links {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .project-link {
+      position: relative;
+      min-height: 116px;
+      display: grid;
+      align-content: end;
+      gap: 0.35rem;
+      padding: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 18px;
+      background: rgba(8, 12, 20, 0.72);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+      transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    }
+
+    .project-link::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 48%);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+
+    .project-link:hover,
+    .project-link:focus-visible {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.34);
+      background: rgba(14, 20, 31, 0.84);
+      outline: none;
+    }
+
+    .project-link.is-coming-soon {
+      cursor: default;
+      opacity: 0.76;
+    }
+
+    .project-link.is-coming-soon:hover {
+      transform: none;
+      border-color: rgba(255, 255, 255, 0.13);
+      background: rgba(8, 12, 20, 0.72);
+    }
+
+    .project-link:hover::before,
+    .project-link:focus-visible::before {
+      opacity: 1;
+    }
+
+    .project-link strong,
+    .project-link span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-link strong {
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .project-link span {
+      color: #aebbd3;
+      font-size: 0.9rem;
+    }
+
+    .home-legal {
+      position: fixed;
+      left: 50%;
+      bottom: clamp(1rem, 3vw, 1.8rem);
+      z-index: 2;
+      transform: translateX(-50%);
+      transition: filter 0.42s ease, transform 0.42s ease;
+    }
+
+    .privacy-button {
+      min-height: 42px;
+      padding: 0.72rem 1rem;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      background: rgba(8,12,20,0.72);
+      color: #f3f3f3;
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 18px 44px rgba(0,0,0,0.35);
+      backdrop-filter: blur(14px);
+      transition: background 0.24s ease, border-color 0.24s ease, transform 0.24s ease;
+    }
+
+    .privacy-button:hover,
+    .privacy-button:focus-visible {
+      background: rgba(18,24,36,0.9);
+      border-color: rgba(255,255,255,0.42);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .privacy-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: clamp(1rem, 3vw, 2.5rem);
+      background: rgba(0,0,0,0);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.42s ease, background 0.42s ease, visibility 0s linear 0.42s;
+    }
+
+    .privacy-modal.is-open {
+      background: rgba(0,0,0,0.78);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+
+    .privacy-panel {
+      position: relative;
+      width: min(760px, 100%);
+      max-height: min(720px, calc(100vh - 48px));
+      overflow-y: auto;
+      padding: clamp(1.4rem, 4vw, 2.4rem);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 18px;
+      background: rgba(7,9,14,0.95);
+      box-shadow: 0 34px 90px rgba(0,0,0,0.55);
+      transform: translateY(18px) scale(0.97);
+      opacity: 0;
+      transition: transform 0.42s cubic-bezier(.2,.8,.2,1), opacity 0.42s ease;
+    }
+
+    .privacy-modal.is-open .privacy-panel {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .privacy-panel h2 {
+      margin: 0 3rem 1rem 0;
+      color: #fff;
+      font-size: clamp(1.35rem, 2.6vw, 2.1rem);
+      letter-spacing: 0;
+    }
+
+    .privacy-panel p {
+      margin: 0 0 0.9rem;
+      color: #d6ddeb;
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    .privacy-panel strong {
+      color: #fff;
+    }
+
+    .privacy-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 50%;
+      background: #000;
+      color: #fff;
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .privacy-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.3rem;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .studio-home {
+        min-height: 100vh;
+        padding: 2rem 1rem;
+      }
+
+      .project-links {
+        grid-template-columns: 1fr;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <main class="studio-home">
+    <img src="logo_2023_altrui_white.png" alt="Altruistudios" class="studio-mark" />
+    <section class="studio-copy" aria-labelledby="studio-title">
+      <p class="studio-kicker">Independent apps, films and games</p>
+      <p id="studio-title">Independent digital experiences by Giovanni Altrui, spanning narrative games, productivity apps, interactive cinema, manga projects and filmmaking work.</p>
+    </section>
+    <nav class="project-links" aria-label="Projects">
+      <a class="project-link" href="become-life.html">
+        <strong>BECOME LIFE</strong>
+        <span>Narrative survival</span>
+      </a>
+      <a class="project-link" href="desk-x.html">
+        <strong>DeskX</strong>
+        <span>Real Desktop Experience</span>
+      </a>
+      <a class="project-link" href="the-stranger.html">
+        <strong>The Stranger</strong>
+        <span>Interactive film</span>
+      </a>
+      <span class="project-link is-coming-soon" role="button" aria-disabled="true">
+        <strong>GENBU MANGA</strong>
+        <span>Coming soon</span>
+      </span>
+      <a class="project-link" href="filmmaker.html">
+        <strong>Filmmaker</strong>
+        <span>Showreel & courses</span>
+      </a>
+    </nav>
+  </main>
+
+  <div class="home-legal">
+    <button class="privacy-button" id="privacyOpen" type="button">Privacy & Cookies</button>
+  </div>
+
+  <div class="privacy-modal" id="privacyModal" aria-hidden="true">
+    <div class="privacy-panel" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+      <button class="privacy-close" id="privacyClose" type="button" aria-label="Close privacy panel">×</button>
+      <h2 id="privacyTitle">Privacy & Cookies</h2>
+      <p>This website is an online portfolio by Giovanni Altrui. It does not use proprietary profiling cookies and does not sell personal data.</p>
+      <p>When you visit the site, the hosting provider may process technical data such as IP address, browser information, requested pages and security logs. These data are used only to deliver the website, keep it secure and diagnose technical issues.</p>
+      <p>Some features connect to third-party services such as Instagram, YouTube, Vimeo, Facebook, Google Fonts, Steam and Apple. Their content, players or links may process data according to their own privacy and cookie policies, especially when you open a video, Instagram DM, app store page or external profile.</p>
+      <p>Embedded videos are loaded only after your interaction. You can manage or block third-party cookies from your browser settings at any time.</p>
+      <p>If you are in the EU, you can request access, correction or deletion of personal data where applicable, and you may contact the competent data protection authority.</p>
+      <div class="privacy-actions">
+        <button class="privacy-button" id="privacyOk" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const logo = document.querySelector('.studio-mark');
+    const privacyModal = document.getElementById('privacyModal');
+    const privacyOpen = document.getElementById('privacyOpen');
+    const privacyClose = document.getElementById('privacyClose');
+    const privacyOk = document.getElementById('privacyOk');
+
+    function setLogoParallax(clientX, clientY) {
+      if (!logo) return;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const x = (clientX - centerX) / centerX;
+      const y = (clientY - centerY) / centerY;
+
+      logo.style.setProperty('--logo-x', `${x * 16}px`);
+      logo.style.setProperty('--logo-y', `${y * 12}px`);
+      logo.style.setProperty('--logo-ry', `${x * 8}deg`);
+      logo.style.setProperty('--logo-rx', `${y * -6}deg`);
+    }
+
+    window.addEventListener('pointermove', (event) => {
+      setLogoParallax(event.clientX, event.clientY);
+    }, { passive: true });
+
+    window.addEventListener('pointerleave', () => {
+      if (!logo) return;
+      logo.style.setProperty('--logo-x', '0px');
+      logo.style.setProperty('--logo-y', '0px');
+      logo.style.setProperty('--logo-ry', '0deg');
+      logo.style.setProperty('--logo-rx', '0deg');
+    });
+
+    function openPrivacy() {
+      privacyModal.classList.add('is-open');
+      privacyModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('privacy-open');
+    }
+
+    function closePrivacy() {
+      privacyModal.classList.remove('is-open');
+      privacyModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('privacy-open');
+    }
+
+    privacyOpen.addEventListener('click', openPrivacy);
+    privacyClose.addEventListener('click', closePrivacy);
+    privacyOk.addEventListener('click', closePrivacy);
+    privacyModal.addEventListener('click', (event) => {
+      if (event.target === privacyModal) closePrivacy();
+    });
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && privacyModal.classList.contains('is-open')) closePrivacy();
+    });
+  </script>
+</body>
+</html>

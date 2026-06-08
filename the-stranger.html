@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Stranger Interactive Film</title>
+  <meta name="description" content="The Stranger Interactive Film is a cinematic choice-driven adventure with remastered 2.5K footage, spatial audio, controller support, Nightmare mode and multiple endings." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-page stranger-page" data-app-page="stranger">
+  <header class="app-nav">
+    <a class="app-back" href="index.html" data-i18n="navHome">Altruistudios</a>
+    <div class="lang-menu">
+      <button class="lang-trigger" type="button" aria-label="Select language">EN</button>
+      <div class="lang-dropdown" role="menu">
+        <button class="lang-option active" data-lang="en" type="button" role="menuitem">English</button>
+        <button class="lang-option" data-lang="it" type="button" role="menuitem">Italiano</button>
+        <button class="lang-option" data-lang="es" type="button" role="menuitem">Español</button>
+        <button class="lang-option" data-lang="fr" type="button" role="menuitem">Français</button>
+        <button class="lang-option" data-lang="de" type="button" role="menuitem">Deutsch</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="product-hero cinematic-hero">
+      <div class="product-copy">
+        <img class="app-icon" src="images/stranger-07-512x512bb.jpg" alt="The Stranger app icon" />
+        <p class="product-kicker" data-i18n="strangerKicker">Interactive cinematic adventure</p>
+        <h1 data-i18n="strangerTitle">The Stranger Interactive Film</h1>
+        <p class="product-lead" data-i18n="strangerLead">Enter a choice-driven cinematic journey where every decision shapes your path, your danger and the ending you unlock.</p>
+        <div class="product-actions">
+          <a class="btn btn-primary" href="https://apps.apple.com/it/app/the-stranger-interactive-film/id1469021582" target="_blank" rel="noopener noreferrer" data-i18n="appStore">View on the App Store</a>
+          <a class="btn btn-secondary" href="#story" data-i18n="discoverStory">Discover the experience</a>
+        </div>
+        <dl class="product-stats">
+          <div>
+            <dt data-i18n="priceLabel">Price</dt>
+            <dd>6.99 EUR</dd>
+          </div>
+          <div>
+            <dt data-i18n="ratingLabel">Rating</dt>
+            <dd>3.7</dd>
+          </div>
+          <div>
+            <dt data-i18n="versionLabel">Version</dt>
+            <dd>3.0.1</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="deskx-carousel stranger-carousel" aria-label="The Stranger App Store screenshots">
+        <div class="deskx-carousel-stage stranger-carousel-stage">
+          <img class="deskx-slide active" src="images/stranger-08-1286x594bb.webp" alt="The Stranger 6.5-inch App Store screenshot" />
+          <img class="deskx-slide" src="images/stranger-09-1286x594bb.webp" alt="The Stranger cinematic screenshot" />
+        </div>
+        <div class="deskx-dots stranger-dots" aria-label="Choose screenshot">
+          <button class="active" type="button" aria-label="Show screenshot 1" data-slide="0"></button>
+          <button type="button" aria-label="Show screenshot 2" data-slide="1"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section" id="story">
+      <div class="section-intro">
+        <p class="section-label" data-i18n="featuresLabel">Main features</p>
+        <h2 data-i18n="strangerFeaturesTitle">A film you do not simply watch.</h2>
+      </div>
+      <div class="product-grid">
+        <article>
+          <h3 data-i18n="strangerF1Title">Choices and consequences</h3>
+          <p data-i18n="strangerF1Text">Every decision can change the route, tension and outcome of the interactive story.</p>
+        </article>
+        <article>
+          <h3 data-i18n="strangerF2Title">Remastered 2.5K footage</h3>
+          <p data-i18n="strangerF2Text">The latest major update brings reworked cinematic footage in sharp 2.5K Quad HD.</p>
+        </article>
+        <article>
+          <h3 data-i18n="strangerF3Title">Nightmare mode</h3>
+          <p data-i18n="strangerF3Text">A darker challenge mode adds pressure for players who want a more unsettling run.</p>
+        </article>
+        <article>
+          <h3 data-i18n="strangerF4Title">Multiple endings</h3>
+          <p data-i18n="strangerF4Text">Track progress, revisit paths and unlock alternate endings shaped by your choices.</p>
+        </article>
+        <article>
+          <h3 data-i18n="strangerF5Title">Spatial audio and controllers</h3>
+          <p data-i18n="strangerF5Text">Immersive audio and improved controller support make interaction feel smoother and more cinematic.</p>
+        </article>
+        <article>
+          <h3 data-i18n="strangerF6Title">Universal compatibility</h3>
+          <p data-i18n="strangerF6Text">Play across iOS, iPadOS, Mac with Apple silicon and Apple Vision Pro through the iPad version.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="product-section screenshot-strip parallax-strip">
+      <img class="parallax-shot" src="images/stranger-08-1286x594bb.webp" alt="The Stranger 6.5-inch choices screenshot" />
+      <img class="parallax-shot" src="images/stranger-09-1286x594bb.webp" alt="The Stranger 6.5-inch cinematic screenshot" />
+    </section>
+
+    <section class="product-section trailer-section" id="trailer">
+      <div class="section-intro">
+        <p class="section-label" data-i18n="trailerLabel">Trailer</p>
+        <h2 data-i18n="strangerTrailerTitle">Watch the official trailer.</h2>
+      </div>
+      <div class="trailer-frame">
+        <iframe src="https://www.youtube.com/embed/na3tnH3xajA?rel=0&vq=hd1080&modestbranding=1" title="The Stranger Interactive Film trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section class="product-section product-band">
+      <div>
+        <p class="section-label" data-i18n="updateLabel">Latest update</p>
+        <h2 data-i18n="strangerUpdateTitle">Version 3.0.1 adds iOS 26.x support and icon theme support.</h2>
+      </div>
+      <p data-i18n="strangerUpdateText">The 3.0 generation introduced the redesigned interface, remastered footage, spatial audio, controller support, Nightmare mode, progress tracking and expanded localization.</p>
+    </section>
+  </main>
+
+  <footer class="product-footer">
+    <span data-i18n="sourceNote">Content based on the official App Store listing.</span>
+    <a href="https://apps.apple.com/it/app/the-stranger-interactive-film/id1469021582" target="_blank" rel="noopener noreferrer" data-i18n="appStore">View on the App Store</a>
+  </footer>
+
+  <script src="app-pages.js"></script>
+</body>
+</html>

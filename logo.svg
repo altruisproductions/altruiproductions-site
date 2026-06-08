@@ -1,0 +1,21 @@
+<svg width="560" height="120" viewBox="0 0 560 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titleDesc">
+  <title>BECOME LIFE logo</title>
+  <desc>Official Become Life stacked logo</desc>
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#d7d7ff" />
+    </linearGradient>
+    <filter id="grunge" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" result="noise" />
+      <feComposite in="SourceGraphic" in2="noise" operator="out" result="rough" />
+      <feMerge>
+        <feMergeNode in="rough" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="560" height="120" fill="none" />
+  <text x="50%" y="40" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="52" letter-spacing="0.15em" fill="url(#logoGrad)" filter="url(#grunge)">BECOME</text>
+  <text x="50%" y="100" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="58" letter-spacing="0.15em" fill="url(#logoGrad)" filter="url(#grunge)">LIFE</text>
+</svg>

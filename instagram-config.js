@@ -1,0 +1,3 @@
+window.INSTAGRAM_FEED_ENDPOINT = "auto";
+window.INSTAGRAM_ACCESS_TOKEN = "";
+window.INSTAGRAM_FEED_LIMIT = 18;

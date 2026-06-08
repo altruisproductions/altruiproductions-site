@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeskX - Real Desktop Experience</title>
+  <meta name="description" content="DeskX turns iPhone and iPad into a real multi-window desktop with files, dock, browser, widgets, spaces and external display support." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-page deskx-page" data-app-page="deskx">
+  <header class="app-nav">
+    <a class="app-back" href="index.html" data-i18n="navHome">Altruistudios</a>
+    <div class="lang-menu">
+      <button class="lang-trigger" type="button" aria-label="Select language">EN</button>
+      <div class="lang-dropdown" role="menu">
+        <button class="lang-option active" data-lang="en" type="button" role="menuitem">English</button>
+        <button class="lang-option" data-lang="it" type="button" role="menuitem">Italiano</button>
+        <button class="lang-option" data-lang="es" type="button" role="menuitem">Español</button>
+        <button class="lang-option" data-lang="fr" type="button" role="menuitem">Français</button>
+        <button class="lang-option" data-lang="de" type="button" role="menuitem">Deutsch</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="product-hero">
+      <div class="product-copy">
+        <img class="app-icon" src="images/deskx-01-512x512bb.jpg" alt="DeskX app icon" />
+        <p class="product-kicker" data-i18n="deskxKicker">Productivity for iPhone and iPad</p>
+        <h1 data-i18n="deskxTitle">DeskX</h1>
+        <p class="product-lead" data-i18n="deskxLead">Turn your iPhone or iPad into a real desktop workspace: windows, folders, files, dock, multitasking, widgets and an integrated browser.</p>
+        <div class="product-actions">
+          <a class="btn btn-primary" href="https://apps.apple.com/it/app/deskx/id6754037980" target="_blank" rel="noopener noreferrer" data-i18n="appStore">View on the App Store</a>
+          <a class="btn btn-secondary" href="#features" data-i18n="exploreFeatures">Explore features</a>
+        </div>
+        <dl class="product-stats">
+          <div>
+            <dt data-i18n="priceLabel">Price</dt>
+            <dd>14.99 EUR</dd>
+          </div>
+          <div>
+            <dt data-i18n="ratingLabel">Rating</dt>
+            <dd>5.0</dd>
+          </div>
+          <div>
+            <dt data-i18n="privacyLabel">Privacy</dt>
+            <dd data-i18n="noData">No data collected</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="deskx-carousel" aria-label="DeskX App Store screenshots">
+        <div class="deskx-carousel-stage">
+          <img class="deskx-slide active" src="images/deskx-02-1286x594bb.webp" alt="DeskX real desktop screenshot" />
+          <img class="deskx-slide" src="images/deskx-03-1286x594bb.webp" alt="DeskX multi-window screenshot" />
+          <img class="deskx-slide" src="images/deskx-04-1286x594bb.webp" alt="DeskX tools screenshot" />
+          <img class="deskx-slide" src="images/deskx-05-1104x828bb.webp" alt="DeskX iPadOS desktop screenshot" />
+          <img class="deskx-slide" src="images/deskx-06-1104x828bb.webp" alt="DeskX iPadOS workspace screenshot" />
+        </div>
+        <div class="deskx-dots" aria-label="Choose screenshot">
+          <button class="active" type="button" aria-label="Show screenshot 1" data-slide="0"></button>
+          <button type="button" aria-label="Show screenshot 2" data-slide="1"></button>
+          <button type="button" aria-label="Show screenshot 3" data-slide="2"></button>
+          <button type="button" aria-label="Show iPadOS screenshot 1" data-slide="3"></button>
+          <button type="button" aria-label="Show iPadOS screenshot 2" data-slide="4"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section" id="features">
+      <div class="section-intro">
+        <p class="section-label" data-i18n="featuresLabel">Main features</p>
+        <h2 data-i18n="deskxFeaturesTitle">A mobile device that behaves like a workstation.</h2>
+      </div>
+      <div class="product-grid">
+        <article>
+          <h3 data-i18n="deskxF1Title">Real desktop</h3>
+          <p data-i18n="deskxF1Text">Icons, folders, files and overlapping windows stay within reach, with a customizable dock for your favorite apps.</p>
+        </article>
+        <article>
+          <h3 data-i18n="deskxF2Title">External display ready</h3>
+          <p data-i18n="deskxF2Text">Use HDMI or DisplayPort adapters and let DeskX adapt the workspace to large screens when connected.</p>
+        </article>
+        <article>
+          <h3 data-i18n="deskxF3Title">Browser and Web Apps</h3>
+          <p data-i18n="deskxF3Text">Browse with tabs, downloads and fullscreen gamepad support, or turn frequently used websites into dedicated Web Apps.</p>
+        </article>
+        <article>
+          <h3 data-i18n="deskxF4Title">Files, tools and widgets</h3>
+          <p data-i18n="deskxF4Text">Manage archives, documents, maps, notes, audio workflows, calculators, finance widgets and quick productivity tools.</p>
+        </article>
+        <article>
+          <h3 data-i18n="deskxF5Title">Spaces and personalization</h3>
+          <p data-i18n="deskxF5Text">Create separate desktops for work, study or creativity, then tune themes, wallpapers, fonts and accent colors.</p>
+        </article>
+        <article>
+          <h3 data-i18n="deskxF6Title">Secure and portable</h3>
+          <p data-i18n="deskxF6Text">Protect the environment with an access password and export your complete system with backup and restore.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="product-section product-band">
+      <div>
+        <p class="section-label" data-i18n="compatLabel">Compatibility</p>
+        <h2 data-i18n="deskxCompatTitle">Built for iPhone, iPad, Mac with Apple silicon and Apple Vision.</h2>
+      </div>
+      <p data-i18n="deskxCompatText">On iPhone, desktop mode is designed for external displays. On iPad, the desktop is available on the built-in display or mirrored to an external screen.</p>
+    </section>
+  </main>
+
+  <footer class="product-footer">
+    <span data-i18n="sourceNote">Content based on the official App Store listing.</span>
+    <a href="https://apps.apple.com/it/app/deskx/id6754037980" target="_blank" rel="noopener noreferrer" data-i18n="appStore">View on the App Store</a>
+  </footer>
+
+  <script src="app-pages.js"></script>
+</body>
+</html>
