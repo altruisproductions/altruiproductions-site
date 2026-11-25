@@ -1,264 +1,176 @@
-(() => {
-  const translations = {
-    en: {
-      title: 'Contact us', close: 'Close', language: 'Language', requiredNote: 'Fields marked * are required.',
-      email: 'Your email *', subject: 'Subject *', message: 'Description *', photo: 'Photo (optional)',
-      choosePhoto: 'Choose a photo', remove: 'Remove photo', photoHint: 'JPG, PNG, WebP, HEIC · 10 MB max.',
-      video: 'Video link (optional)', privacy: 'We use your details and any attachment to respond to your message.',
-      send: 'Send message', sending: 'Sending…', success: 'Message sent. Thank you for getting in touch.',
-      invalidEmail: 'Enter a valid email address.', invalidSubject: 'Enter a subject of up to 120 characters.',
-      invalidMessage: 'Enter a description of up to 5,000 characters.', invalidVideo: 'Enter a valid HTTPS or HTTP video link.',
-      photoSize: 'Choose a photo no larger than 10 MB.', photoType: 'Choose a valid JPG, PNG, WebP or HEIC photo.',
-      failed: 'Your message couldn’t be sent. Please try again later.'
-    },
-    it: {
-      title: 'Contattaci', close: 'Chiudi', language: 'Lingua', requiredNote: 'I campi contrassegnati con * sono obbligatori.',
-      email: 'La tua email *', subject: 'Oggetto *', message: 'Descrizione *', photo: 'Foto (facoltativa)',
-      choosePhoto: 'Scegli una foto', remove: 'Rimuovi foto', photoHint: 'JPG, PNG, WebP, HEIC · max 10 MB',
-      video: 'Link al video (facoltativo)', privacy: 'Usiamo i tuoi dati e l’eventuale allegato per rispondere al tuo messaggio.',
-      send: 'Invia messaggio', sending: 'Invio in corso…', success: 'Messaggio inviato. Grazie per averci contattato.',
-      invalidEmail: 'Inserisci un indirizzo email valido.', invalidSubject: 'Inserisci un oggetto di massimo 120 caratteri.',
-      invalidMessage: 'Inserisci una descrizione di massimo 5.000 caratteri.', invalidVideo: 'Inserisci un link al video valido, con HTTPS o HTTP.',
-      photoSize: 'Scegli una foto di massimo 10 MB.', photoType: 'Scegli una foto valida in formato JPG, PNG, WebP o HEIC.',
-      failed: 'Impossibile inviare il messaggio. Riprova più tardi.'
-    },
-    es: {
-      title: 'Contáctanos', close: 'Cerrar', language: 'Idioma', requiredNote: 'Los campos marcados con * son obligatorios.',
-      email: 'Tu correo electrónico *', subject: 'Asunto *', message: 'Descripción *', photo: 'Foto (opcional)',
-      choosePhoto: 'Elige una foto', remove: 'Quitar foto', photoHint: 'JPG, PNG, WebP, HEIC · máx. 10 MB',
-      video: 'Enlace al vídeo (opcional)', privacy: 'Usamos tus datos y el archivo adjunto para responder a tu mensaje.',
-      send: 'Enviar mensaje', sending: 'Enviando…', success: 'Mensaje enviado. Gracias por ponerte en contacto.',
-      invalidEmail: 'Introduce un correo electrónico válido.', invalidSubject: 'Introduce un asunto de hasta 120 caracteres.',
-      invalidMessage: 'Introduce una descripción de hasta 5000 caracteres.', invalidVideo: 'Introduce un enlace al vídeo válido con HTTPS o HTTP.',
-      photoSize: 'Elige una foto de hasta 10 MB.', photoType: 'Elige una foto válida en formato JPG, PNG, WebP o HEIC.',
-      failed: 'No se pudo enviar el mensaje. Inténtalo más tarde.'
-    },
-    fr: {
-      title: 'Contactez-nous', close: 'Fermer', language: 'Langue', requiredNote: 'Les champs marqués d’un * sont obligatoires.',
-      email: 'Votre adresse e-mail *', subject: 'Objet *', message: 'Description *', photo: 'Photo (facultative)',
-      choosePhoto: 'Choisir une photo', remove: 'Retirer la photo', photoHint: 'JPG, PNG, WebP, HEIC · 10 Mo max.',
-      video: 'Lien vidéo (facultatif)', privacy: 'Nous utilisons vos coordonnées et la pièce jointe éventuelle pour vous répondre.',
-      send: 'Envoyer le message', sending: 'Envoi en cours…', success: 'Message envoyé. Merci de nous avoir contactés.',
-      invalidEmail: 'Saisissez une adresse e-mail valide.', invalidSubject: 'Saisissez un objet de 120 caractères maximum.',
-      invalidMessage: 'Saisissez une description de 5 000 caractères maximum.', invalidVideo: 'Saisissez un lien vidéo HTTPS ou HTTP valide.',
-      photoSize: 'Choisissez une photo de 10 Mo maximum.', photoType: 'Choisissez une photo valide au format JPG, PNG, WebP ou HEIC.',
-      failed: 'Impossible d’envoyer votre message. Réessayez plus tard.'
-    },
-    de: {
-      title: 'Kontakt', close: 'Schließen', language: 'Sprache', requiredNote: 'Mit * gekennzeichnete Felder sind Pflichtfelder.',
-      email: 'Ihre E-Mail-Adresse *', subject: 'Betreff *', message: 'Beschreibung *', photo: 'Foto (optional)',
-      choosePhoto: 'Foto auswählen', remove: 'Foto entfernen', photoHint: 'JPG, PNG, WebP, HEIC · max. 10 MB',
-      video: 'Videolink (optional)', privacy: 'Wir verwenden Ihre Angaben und einen etwaigen Anhang, um Ihnen zu antworten.',
-      send: 'Nachricht senden', sending: 'Wird gesendet…', success: 'Nachricht gesendet. Vielen Dank für Ihre Anfrage.',
-      invalidEmail: 'Geben Sie eine gültige E-Mail-Adresse ein.', invalidSubject: 'Geben Sie einen Betreff mit höchstens 120 Zeichen ein.',
-      invalidMessage: 'Geben Sie eine Beschreibung mit höchstens 5.000 Zeichen ein.', invalidVideo: 'Geben Sie einen gültigen HTTPS- oder HTTP-Videolink ein.',
-      photoSize: 'Wählen Sie ein Foto mit höchstens 10 MB.', photoType: 'Wählen Sie ein gültiges JPG-, PNG-, WebP- oder HEIC-Foto.',
-      failed: 'Ihre Nachricht konnte nicht gesendet werden. Versuchen Sie es später erneut.'
-    }
-  };
+const { createHash } = require('node:crypto');
+const { del, get, issueSignedToken, presignUrl } = require('@vercel/blob');
 
-  const dialog = document.getElementById('contactDialog');
-  const openButton = document.getElementById('contactOpen');
-  const languageSelect = document.getElementById('contactLanguage');
-  const form = document.getElementById('contactForm');
-  const submit = document.getElementById('contactSubmit');
-  const status = document.getElementById('contactStatus');
-  const photo = document.getElementById('contactPhoto');
-  const photoName = document.getElementById('contactPhotoName');
-  const remove = document.getElementById('contactRemove');
-  const maxPhotoBytes = 10_000_000;
-  const photoFormats = { jpg: 'jpg', jpeg: 'jpg', png: 'png', webp: 'webp', heic: 'heic', heif: 'heic' };
-  const formFields = {
-    invalidEmail: form.elements.email,
-    invalidSubject: form.elements.subject,
-    invalidMessage: form.elements.message,
-    invalidVideo: form.elements.video,
-    photoSize: photo,
-    photoType: photo
-  };
-  let language;
-  let statusKey = '';
-  let statusKind = '';
-  let sending = false;
-  let submissionId;
+const maxPhotoBytes = 10_000_000;
+const photoTypes = {
+  jpg: 'image/jpeg',
+  png: 'image/png',
+  webp: 'image/webp',
+  heic: 'image/heic'
+};
+const emailPattern = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/i;
+const submissionPattern = /^[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/i;
 
-  function setStatus(key = '', kind = '') {
-    statusKey = key;
-    statusKind = kind;
-    status.textContent = key ? translations[language][key] : '';
-    status.dataset.kind = kind;
+function isSameOrigin(request) {
+  const { host, origin } = request.headers;
+  if (!host || !origin) return false;
+  try {
+    const url = new URL(origin);
+    return url.host === host && ['http:', 'https:'].includes(url.protocol);
+  } catch {
+    return false;
+  }
+}
+
+function videoLinkIsValid(value) {
+  if (!value) return true;
+  try {
+    const url = new URL(value);
+    return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password;
+  } catch {
+    return false;
+  }
+}
+
+function photoFormat(bytes) {
+  const ascii = (start, end) => bytes.toString('ascii', start, end);
+  if (bytes.length < 12) return '';
+  if (bytes.subarray(0, 3).equals(Buffer.from([0xff, 0xd8, 0xff]))) return 'jpg';
+  if (bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) return 'png';
+  if (ascii(0, 4) === 'RIFF' && ascii(8, 12) === 'WEBP') return 'webp';
+  if (ascii(4, 8) === 'ftyp' && /^(heic|heix|heim|heis|mif1|msf1)$/.test(ascii(8, 12))) return 'heic';
+  return '';
+}
+
+module.exports = async function contact(request, response) {
+  response.setHeader('Cache-Control', 'no-store');
+
+  if (request.method !== 'POST') {
+    response.setHeader('Allow', 'POST');
+    return response.status(405).json({ code: 'method' });
+  }
+  if (!isSameOrigin(request)) return response.status(403).json({ code: 'origin' });
+  if (!/^application\/json(?:;|$)/i.test(request.headers['content-type'] || '')) {
+    return response.status(415).json({ code: 'unsupported' });
   }
 
-  function showError(key) {
-    const field = formFields[key];
-    if (field) {
-      field.setAttribute('aria-invalid', 'true');
-      field.setAttribute('aria-errormessage', status.id);
-      field.focus();
-    }
-    setStatus(key, 'error');
+  const body = request.body;
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return response.status(400).json({ code: 'invalid' });
+  }
+  if (body.website) return response.status(200).json({ ok: true });
+
+  const text = (value) => typeof value === 'string' ? value.trim() : '';
+  const id = text(body.id);
+  const email = text(body.email);
+  const subject = text(body.subject);
+  const message = text(body.message);
+  const video = text(body.video);
+
+  if (!submissionPattern.test(id)) return response.status(400).json({ code: 'invalid' });
+  if (email.length > 254 || !emailPattern.test(email)) {
+    return response.status(400).json({ code: 'invalidEmail' });
+  }
+  if (!subject || subject.length > 120 || /[\x00-\x1f\x7f]/.test(subject)) {
+    return response.status(400).json({ code: 'invalidSubject' });
+  }
+  if (!message || message.length > 5000) return response.status(400).json({ code: 'invalidMessage' });
+  if (video.length > 2048 || !videoLinkIsValid(video)) {
+    return response.status(400).json({ code: 'invalidVideo' });
   }
 
-  function updatePhoto() {
-    const file = photo.files[0];
-    photoName.textContent = file ? file.name : translations[language].choosePhoto;
-    remove.hidden = !file;
+  const { RESEND_API_KEY: apiKey, CONTACT_FROM_EMAIL: from, CONTACT_TO_EMAIL: to } = process.env;
+  if (!apiKey || !from || !to) return response.status(503).json({ code: 'unavailable' });
+
+  const format = body.photo;
+  if (format != null && (typeof format !== 'string' || !Object.hasOwn(photoTypes, format))) {
+    return response.status(400).json({ code: 'photoType' });
+  }
+  if (body.step !== 'upload' && body.step !== 'send') {
+    return response.status(400).json({ code: 'invalid' });
   }
 
-  function setLanguage(nextLanguage) {
-    language = nextLanguage;
-    const copy = translations[language];
-    dialog.lang = language;
-    openButton.lang = language;
-    languageSelect.value = language;
-    document.querySelectorAll('[data-contact]').forEach((element) => {
-      element.textContent = copy[element.dataset.contact];
-    });
-    document.querySelectorAll('[data-contact-label]').forEach((element) => {
-      element.setAttribute('aria-label', copy[element.dataset.contactLabel]);
-    });
-    document.getElementById('contactPhotoHint').textContent = copy.photoHint;
-    submit.textContent = sending ? copy.sending : copy.send;
-    updatePhoto();
-    setStatus(statusKey, statusKind);
-  }
-
-  function photoFormat(file) {
-    const extension = /\.([a-z]+)$/i.exec(file.name)?.[1].toLowerCase();
-    return Object.hasOwn(photoFormats, extension) ? photoFormats[extension] : '';
-  }
-
-  function validatePhoto(file) {
-    if (!file) return '';
-    if (file.size > maxPhotoBytes) return 'photoSize';
-    if (!file.size || !photoFormat(file)) return 'photoType';
-    return '';
-  }
-
-  function validateVideo(value) {
-    if (!value) return true;
+  const detailsHash = createHash('sha256').update(JSON.stringify([email, subject, message, video])).digest('hex');
+  const pathname = format == null ? null : `contact/${id}/${detailsHash}.${format}`;
+  if (body.step === 'upload') {
+    if (!pathname) return response.status(400).json({ code: 'photoType' });
     try {
-      const url = new URL(value);
-      return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password;
-    } catch {
-      return false;
-    }
-  }
-
-  async function postContact(payload, step) {
-    const response = await fetch(form.action, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...payload, step }),
-      signal: AbortSignal.timeout(45_000)
-    });
-    const data = await response.json().catch(() => ({}));
-    return response.ok ? data : { code: data.code };
-  }
-
-  const preferred = (navigator.languages || [navigator.language])
-    .map((locale) => locale.toLowerCase().split('-')[0])
-    .find((locale) => Object.hasOwn(translations, locale));
-  setLanguage(preferred || 'en');
-
-  openButton.addEventListener('click', () => dialog.showModal());
-  document.getElementById('contactClose').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', (event) => {
-    if (event.target !== dialog) return;
-    const rect = dialog.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right ||
-        event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
-  });
-  languageSelect.addEventListener('change', () => setLanguage(languageSelect.value));
-
-  form.addEventListener('input', (event) => {
-    submissionId = undefined;
-    event.target.removeAttribute('aria-invalid');
-    event.target.removeAttribute('aria-errormessage');
-    if (!sending) setStatus();
-  });
-  photo.addEventListener('change', () => {
-    updatePhoto();
-    const error = validatePhoto(photo.files[0]);
-    if (error) showError(error);
-  });
-  remove.addEventListener('click', () => {
-    photo.value = '';
-    photo.dispatchEvent(new Event('input', { bubbles: true }));
-    updatePhoto();
-    photo.focus();
-  });
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (sending) return;
-
-    const data = new FormData(form);
-    const email = data.get('email').trim();
-    const subject = data.get('subject').trim();
-    const message = data.get('message').trim();
-    const video = data.get('video').trim();
-    const file = photo.files[0];
-    const error = !email || !form.elements.email.validity.valid ? 'invalidEmail'
-      : !subject || subject.length > 120 ? 'invalidSubject'
-      : !message || message.length > 5000 ? 'invalidMessage'
-      : !validateVideo(video) || video.length > 2048 ? 'invalidVideo'
-      : validatePhoto(file);
-    if (error) {
-      showError(error);
-      return;
-    }
-
-    sending = true;
-    const editable = [...form.elements].filter((element) => element !== submit);
-    editable.forEach((element) => { element.disabled = true; });
-    submit.disabled = true;
-    submit.textContent = translations[language].sending;
-    setStatus('sending');
-
-    try {
-      const payload = {
-        id: submissionId ??= crypto.randomUUID(),
-        email, subject, message, video,
-        website: data.get('website'),
-        photo: file ? photoFormat(file) : null
+      const constraints = {
+        pathname,
+        maximumSizeInBytes: maxPhotoBytes,
+        allowedContentTypes: [photoTypes[format]],
+        validUntil: Date.now() + 5 * 60_000
       };
-      let result;
-      if (file) {
-        result = await postContact(payload, 'upload');
-        if (result.uploadUrl) {
-          const upload = await fetch(result.uploadUrl, {
-            method: 'PUT',
-            body: file,
-            signal: AbortSignal.timeout(120_000)
-          });
-          result = upload.ok ? null : { code: upload.status === 413 ? 'photoSize' : 'uploadFailed' };
+      const token = await issueSignedToken({ ...constraints, operations: ['put'] });
+      const { presignedUrl } = await presignUrl(token, {
+        ...constraints,
+        operation: 'put',
+        access: 'private',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+        ttlDays: 1
+      });
+      return response.status(200).json({ uploadUrl: presignedUrl });
+    } catch (error) {
+      console.error('Contact photo upload unavailable', error.name);
+      return response.status(503).json({ code: 'unavailable' });
+    }
+  }
+
+  const mail = {
+    from,
+    to: [to],
+    reply_to: email,
+    subject: `[Altrui Productions] ${subject}`,
+    text: `From: ${email}\n\n${message}${video ? `\n\nVideo: ${video}` : ''}`
+  };
+
+  try {
+    if (pathname) {
+      const uploaded = await get(pathname, { access: 'private', useCache: false, abortSignal: AbortSignal.timeout(10_000) });
+      if (uploaded?.statusCode !== 200) return response.status(409).json({ code: 'uploadFailed' });
+
+      let bytes;
+      try {
+        if (uploaded.blob.size > maxPhotoBytes) {
+          await uploaded.stream.cancel();
+          return response.status(413).json({ code: 'photoSize' });
+        }
+        bytes = Buffer.from(await new Response(uploaded.stream).arrayBuffer());
+      } finally {
+        try {
+          await del(pathname, { ifMatch: uploaded.blob.etag, abortSignal: AbortSignal.timeout(5_000) });
+        } catch {
+          console.warn('Contact photo cleanup deferred to storage expiry');
         }
       }
-      result ??= await postContact(payload, 'send');
-      if (result.ok !== true) {
-        const errorKey = result.code;
-        const fieldError = Object.hasOwn(formFields, errorKey) ? errorKey : 'failed';
-        editable.forEach((element) => { element.disabled = false; });
-        showError(fieldError);
-        return;
-      }
 
-      form.reset();
-      submissionId = undefined;
-      Object.values(formFields).forEach((field) => {
-        field.removeAttribute('aria-invalid');
-        field.removeAttribute('aria-errormessage');
-      });
-      updatePhoto();
-      setStatus('success', 'success');
-    } catch {
-      setStatus('failed', 'error');
-    } finally {
-      sending = false;
-      editable.forEach((element) => { element.disabled = false; });
-      submit.disabled = false;
-      submit.textContent = translations[language].send;
+      if (bytes.length > maxPhotoBytes) return response.status(413).json({ code: 'photoSize' });
+      if (photoFormat(bytes) !== format) return response.status(400).json({ code: 'photoType' });
+      mail.attachments = [{ filename: `photo.${format}`, content: bytes.toString('base64') }];
     }
-  });
-})();
+
+    const payload = JSON.stringify(mail);
+    const hash = createHash('sha256').update(payload).digest('hex');
+    const result = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'Idempotency-Key': `website-contact/${id}/${hash}`
+      },
+      body: payload,
+      signal: AbortSignal.timeout(25_000)
+    });
+    if (!result.ok) {
+      console.error('Contact email rejected', result.status);
+      return response.status(502).json({ code: 'delivery' });
+    }
+    const confirmation = await result.json();
+    if (!confirmation.id) return response.status(502).json({ code: 'delivery' });
+    return response.status(200).json({ ok: true });
+  } catch (error) {
+    console.error('Contact request failed', error.name);
+    return response.status(502).json({ code: 'delivery' });
+  }
+};
