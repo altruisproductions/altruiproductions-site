@@ -140,8 +140,8 @@ module.exports = async function contact(request, response) {
     from,
     to: [to],
     reply_to: email,
-    subject: `[Altrui Productions] ${subject}`,
-    text: `From: ${email}\n\n${message}${video ? `\n\nVideo: ${video}` : ''}`
+    subject: `[Contattaci] ${email} — ${subject}`,
+    text: `Email del mittente: ${email}\nOggetto: ${subject}\n\n${message}${video ? `\n\nVideo: ${video}` : ''}`
   };
 
   try {

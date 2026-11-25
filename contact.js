@@ -202,10 +202,14 @@
     return response.ok ? data : { code: data.code };
   }
 
-  const preferred = (navigator.languages || [navigator.language])
-    .map((locale) => locale.toLowerCase().split('-')[0])
-    .find((locale) => Object.hasOwn(translations, locale));
-  setLanguage(preferred || 'en');
+  const languagePreferenceKey = 'altrui-home-language';
+  let savedLanguage;
+  try {
+    savedLanguage = localStorage.getItem(languagePreferenceKey);
+  } catch {
+    // Storage can be unavailable, for example when cookies and site data are blocked.
+  }
+  setLanguage(Object.hasOwn(translations, savedLanguage) ? savedLanguage : 'en');
 
   openButton.addEventListener('click', () => dialog.showModal());
   document.getElementById('contactClose').addEventListener('click', () => dialog.close());
@@ -219,22 +223,27 @@
     languageMenu.classList.toggle('open', open);
     languageTrigger.setAttribute('aria-expanded', String(open));
     languageOptions.hidden = !open;
-    if (open) languageOptions.querySelector('.active').focus();
   }
 
-  languageTrigger.addEventListener('click', () => showLanguages(languageOptions.hidden));
+  languageTrigger.addEventListener('click', (event) => {
+    const opening = languageOptions.hidden;
+    showLanguages(opening);
+    if (opening && event.detail === 0) languageOptions.querySelector('.active').focus();
+  });
   languageButtons.forEach((button) => {
     button.addEventListener('click', () => {
       setLanguage(button.dataset.lang);
+      try {
+        localStorage.setItem(languagePreferenceKey, language);
+      } catch {
+        // The current page still uses the selected language without storage.
+      }
       showLanguages(false);
       languageTrigger.focus();
     });
   });
   document.addEventListener('click', (event) => {
     if (!languageMenu.contains(event.target)) showLanguages(false);
-  });
-  languageMenu.addEventListener('focusout', (event) => {
-    if (!languageMenu.contains(event.relatedTarget)) showLanguages(false);
   });
   languageMenu.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !languageOptions.hidden) {
