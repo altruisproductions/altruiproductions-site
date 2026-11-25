@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="contact.css" />
   <style>
     body {
       min-height: 100vh;
@@ -318,7 +319,67 @@
         <span>Showreel & courses</span>
       </a>
     </nav>
+    <button class="contact-open" id="contactOpen" type="button" aria-haspopup="dialog" aria-controls="contactDialog" data-contact="title">Contact us</button>
   </main>
+
+  <dialog class="contact-dialog" id="contactDialog" aria-labelledby="contactTitle">
+    <div class="contact-heading">
+      <h2 id="contactTitle" data-contact="title">Contact us</h2>
+      <button class="contact-close" id="contactClose" type="button" aria-label="Close" data-contact-label="close">×</button>
+    </div>
+
+    <label class="contact-language">
+      <span data-contact="language">Language</span>
+      <select id="contactLanguage">
+        <option value="en" lang="en">English</option>
+        <option value="it" lang="it">Italiano</option>
+        <option value="es" lang="es">Español</option>
+        <option value="fr" lang="fr">Français</option>
+        <option value="de" lang="de">Deutsch</option>
+      </select>
+    </label>
+
+    <form class="contact-form" id="contactForm" method="post" action="/api/contact" novalidate>
+      <p class="contact-note" data-contact="requiredNote">Fields marked * are required.</p>
+      <div class="contact-row">
+        <label>
+          <span data-contact="email">Your email *</span>
+          <input name="email" type="email" autocomplete="email" maxlength="254" required autofocus />
+        </label>
+        <label>
+          <span data-contact="subject">Subject *</span>
+          <input name="subject" type="text" maxlength="120" required />
+        </label>
+      </div>
+      <label>
+        <span data-contact="message">Description *</span>
+        <textarea name="message" rows="4" maxlength="5000" required></textarea>
+      </label>
+      <div class="contact-row contact-attachments">
+        <div class="contact-file">
+          <label for="contactPhoto" data-contact="photo">Photo (optional)</label>
+          <input id="contactPhoto" name="photo" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.heif" aria-describedby="contactPhotoHint" />
+          <label class="contact-file-name" for="contactPhoto">
+            <span id="contactPhotoName" data-contact="choosePhoto">Choose a photo</span>
+          </label>
+          <button class="contact-remove" id="contactRemove" type="button" data-contact="remove" hidden>Remove photo</button>
+          <small id="contactPhotoHint">JPG, PNG, WebP, HEIC · 10 MB max.</small>
+        </div>
+        <label>
+          <span data-contact="video">Video link (optional)</span>
+          <input name="video" type="url" inputmode="url" placeholder="https://" maxlength="2048" />
+        </label>
+      </div>
+      <div hidden>
+        <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <p class="contact-note" data-contact="privacy">We use your details and any attachment to respond to your message.</p>
+      <div class="contact-actions">
+        <p id="contactStatus" class="contact-status" role="status" aria-live="polite"></p>
+        <button class="contact-submit" id="contactSubmit" type="submit" data-contact="send">Send message</button>
+      </div>
+    </form>
+  </dialog>
 
   <div class="home-legal">
     <button class="privacy-button" id="privacyOpen" type="button">Privacy & Cookies</button>
@@ -331,6 +392,7 @@
       <p>This website is an online portfolio by Giovanni Altrui. It does not use proprietary profiling cookies and does not sell personal data.</p>
       <p>When you visit the site, the hosting provider may process technical data such as IP address, browser information, requested pages and security logs. These data are used only to deliver the website, keep it secure and diagnose technical issues.</p>
       <p>Some features connect to third-party services such as Instagram, YouTube, Vimeo, Facebook, Google Fonts, Steam and Apple. Their content, players or links may process data according to their own privacy and cookie policies, especially when you open a video, Instagram DM, app store page or external profile.</p>
+      <p>When you use the contact form, your email address, message, and any photo or video link you include are processed by our hosting and email delivery providers to deliver your inquiry and allow us to respond.</p>
       <p>Embedded videos are loaded only after your interaction. You can manage or block third-party cookies from your browser settings at any time.</p>
       <p>If you are in the EU, you can request access, correction or deletion of personal data where applicable, and you may contact the competent data protection authority.</p>
       <div class="privacy-actions">
@@ -393,5 +455,6 @@
       if (event.key === 'Escape' && privacyModal.classList.contains('is-open')) closePrivacy();
     });
   </script>
+  <script src="contact.js" defer></script>
 </body>
 </html>
