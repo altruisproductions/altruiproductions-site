@@ -1,0 +1,222 @@
+.contact-open,
+.contact-submit {
+  min-height: 46px;
+  padding: .68rem 1.3rem;
+  border: 1px solid #536585;
+  border-radius: 999px;
+  background: #dce7fc;
+  color: #141d2e;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.contact-open {
+  margin-top: -.95rem;
+  background: #111827;
+  color: #e5edfc;
+  min-width: 9.5rem;
+}
+
+.contact-open:hover {
+  background: #1b2940;
+}
+
+.contact-submit:hover {
+  background: #f0f5ff;
+}
+
+.contact-submit:disabled {
+  opacity: .68;
+  cursor: wait;
+}
+
+body:has(.contact-dialog[open]) {
+  overflow: hidden;
+}
+
+body:has(.contact-dialog) .studio-home {
+  box-sizing: border-box;
+  padding-bottom: max(5.5rem, 6vw);
+}
+
+.contact-dialog {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  width: min(41rem, calc(100% - 1.5rem));
+  max-width: none;
+  max-height: calc(100dvh - 1.5rem);
+  margin: auto;
+  padding: clamp(1.15rem, 4vw, 2rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #39465f;
+  border-radius: 22px;
+  background: radial-gradient(ellipse at top left, #1a2539 0, transparent 62%), #0b1019;
+  color: #f5f7fb;
+  color-scheme: dark;
+  box-shadow: 0 30px 90px #000b;
+}
+
+.contact-dialog::backdrop {
+  background: #03060bb8;
+  backdrop-filter: blur(7px);
+}
+
+.contact-heading,
+.contact-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.contact-heading h2 {
+  margin: 0;
+  font-size: clamp(1.55rem, 4vw, 2.2rem);
+  letter-spacing: -.025em;
+}
+
+.contact-close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #4a5973;
+  border-radius: 50%;
+  background: #0c1422;
+  color: inherit;
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.contact-language {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin: .5rem 0 1.15rem;
+  color: #c1cde0;
+  font-size: .875rem;
+}
+
+.contact-language select {
+  max-width: 55%;
+  padding: .26rem .4rem;
+  border: 1px solid #43516c;
+  border-radius: 7px;
+  background: #101927;
+  color: #e7eefb;
+  font: inherit;
+}
+
+.contact-form,
+.contact-row {
+  display: grid;
+  gap: .9rem 1rem;
+}
+
+.contact-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contact-form label,
+.contact-file {
+  display: grid;
+  align-content: start;
+  gap: .35rem;
+  min-width: 0;
+  font-size: .9rem;
+  font-weight: 650;
+}
+
+.contact-form input:not([type="file"]),
+.contact-form textarea,
+.contact-file-name {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: .65rem .75rem;
+  border: 1px solid #43516c;
+  border-radius: 10px;
+  background: #0b1321;
+  color: #f4f7fc;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.contact-open:focus-visible,
+.contact-dialog :focus-visible,
+.contact-file:focus-within .contact-file-name {
+  outline: 2px solid #aec9ff;
+  outline-offset: 3px;
+}
+
+.contact-dialog [aria-invalid="true"] {
+  border-color: #ff9a97;
+}
+
+.contact-file {
+  position: relative;
+  align-content: start;
+}
+
+.contact-file input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.contact-form .contact-file-name {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.contact-file-name span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-remove {
+  justify-self: start;
+  border: 0;
+  padding: .18rem 0;
+  background: none;
+  color: #c9dafe;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.contact-note,
+.contact-file small,
+.contact-status {
+  margin: 0;
+  color: #bcc9df;
+  font-size: .85rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.contact-status[data-kind="error"] { color: #ffaaa5; }
+.contact-status[data-kind="success"] { color: #a4e6c6; }
+.contact-submit { flex: none; margin-left: auto; }
+
+@media (max-width: 540px) {
+  .contact-row { grid-template-columns: 1fr; }
+  .contact-actions { flex-wrap: wrap; }
+  .contact-submit { width: 100%; }
+}
