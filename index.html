@@ -43,6 +43,18 @@
       transform: translateX(-50%) scale(0.985);
     }
 
+    .home-language {
+      position: absolute;
+      top: clamp(1rem, 3vw, 1.8rem);
+      right: clamp(1rem, 4vw, 2.4rem);
+      z-index: 3;
+    }
+
+    .home-language :focus-visible {
+      outline: 2px solid #aec9ff;
+      outline-offset: -2px;
+    }
+
     .studio-home {
       position: relative;
       z-index: 1;
@@ -280,7 +292,7 @@
 
       .studio-home {
         min-height: 100vh;
-        padding: 2rem 1rem;
+        padding: 4.5rem 1rem 2rem;
       }
 
       .project-links {
@@ -291,32 +303,43 @@
   </style>
 </head>
 <body>
+  <div class="lang-menu home-language" id="homeLanguage">
+    <button class="lang-trigger" id="homeLanguageTrigger" type="button" aria-label="Select language"
+      aria-expanded="false" aria-controls="homeLanguageOptions">EN</button>
+    <div class="lang-dropdown" id="homeLanguageOptions" hidden>
+      <button class="lang-option active" data-lang="en" lang="en" type="button" aria-pressed="true">English</button>
+      <button class="lang-option" data-lang="it" lang="it" type="button" aria-pressed="false">Italiano</button>
+      <button class="lang-option" data-lang="es" lang="es" type="button" aria-pressed="false">Español</button>
+      <button class="lang-option" data-lang="fr" lang="fr" type="button" aria-pressed="false">Français</button>
+      <button class="lang-option" data-lang="de" lang="de" type="button" aria-pressed="false">Deutsch</button>
+    </div>
+  </div>
   <main class="studio-home">
     <img src="images/altrui-productions-varco-white.png" width="2048" height="2130" alt="Altrui Productions" class="studio-mark" />
     <section class="studio-copy" aria-labelledby="studio-title">
-      <p class="studio-kicker">Independent apps, films and games</p>
-      <p id="studio-title">Independent digital experiences by Giovanni Altrui, spanning narrative games, productivity apps, interactive cinema, manga projects and filmmaking work.</p>
+      <p class="studio-kicker" data-home="kicker">Independent apps, films and games</p>
+      <p id="studio-title" data-home="intro">Independent digital experiences by Giovanni Altrui, spanning narrative games, productivity apps, interactive cinema, manga projects and filmmaking work.</p>
     </section>
-    <nav class="project-links" aria-label="Projects">
+    <nav class="project-links" aria-label="Projects" data-home-label="projects">
       <a class="project-link" href="become-life.html">
         <strong>BECOME LIFE</strong>
-        <span>Narrative survival</span>
+        <span data-home="survival">Narrative survival</span>
       </a>
       <a class="project-link" href="desk-x.html">
         <strong>DeskX</strong>
-        <span>Real Desktop Experience</span>
+        <span data-home="desktop">Real Desktop Experience</span>
       </a>
       <a class="project-link" href="the-stranger.html">
         <strong>The Stranger</strong>
-        <span>Interactive film</span>
+        <span data-home="film">Interactive film</span>
       </a>
       <span class="project-link is-coming-soon" role="button" aria-disabled="true">
         <strong>GENBU MANGA</strong>
-        <span>Coming soon</span>
+        <span data-home="manga">Coming soon</span>
       </span>
       <a class="project-link" href="filmmaker.html">
         <strong>Filmmaker</strong>
-        <span>Showreel & courses</span>
+        <span data-home="filmmaker">Showreel & courses</span>
       </a>
     </nav>
     <button class="contact-open" id="contactOpen" type="button" aria-haspopup="dialog" aria-controls="contactDialog" data-contact="title">Contact us</button>
@@ -327,17 +350,6 @@
       <h2 id="contactTitle" data-contact="title">Contact us</h2>
       <button class="contact-close" id="contactClose" type="button" aria-label="Close" data-contact-label="close">×</button>
     </div>
-
-    <label class="contact-language">
-      <span data-contact="language">Language</span>
-      <select id="contactLanguage">
-        <option value="en" lang="en">English</option>
-        <option value="it" lang="it">Italiano</option>
-        <option value="es" lang="es">Español</option>
-        <option value="fr" lang="fr">Français</option>
-        <option value="de" lang="de">Deutsch</option>
-      </select>
-    </label>
 
     <form class="contact-form" id="contactForm" method="post" action="/api/contact" novalidate>
       <p class="contact-note" data-contact="requiredNote">Fields marked * are required.</p>
@@ -357,13 +369,13 @@
       </label>
       <div class="contact-row contact-attachments">
         <div class="contact-file">
-          <label for="contactPhoto" data-contact="photo">Photo (optional)</label>
-          <input id="contactPhoto" name="photo" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.heif" aria-describedby="contactPhotoHint" />
+          <label for="contactPhoto" data-contact="photo">Photos (optional)</label>
+          <input id="contactPhoto" name="photo" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.heic,.heif" aria-describedby="contactPhotoHint" />
           <label class="contact-file-name" for="contactPhoto">
-            <span id="contactPhotoName" data-contact="choosePhoto">Choose a photo</span>
+            <span id="contactPhotoName" data-contact="choosePhoto">Choose photos</span>
           </label>
-          <button class="contact-remove" id="contactRemove" type="button" data-contact="remove" hidden>Remove photo</button>
-          <small id="contactPhotoHint">JPG, PNG, WebP, HEIC · 10 MB max.</small>
+          <button class="contact-remove" id="contactRemove" type="button" data-contact="remove" hidden>Remove photos</button>
+          <small id="contactPhotoHint">JPG, PNG, WebP, HEIC · 10 MB total max.</small>
         </div>
         <label>
           <span data-contact="video">Video link (optional)</span>
@@ -381,11 +393,11 @@
     </form>
   </dialog>
 
-  <div class="home-legal">
+  <div class="home-legal" lang="en">
     <button class="privacy-button" id="privacyOpen" type="button">Privacy & Cookies</button>
   </div>
 
-  <div class="privacy-modal" id="privacyModal" aria-hidden="true">
+  <div class="privacy-modal" id="privacyModal" aria-hidden="true" lang="en">
     <div class="privacy-panel" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
       <button class="privacy-close" id="privacyClose" type="button" aria-label="Close privacy panel">×</button>
       <h2 id="privacyTitle">Privacy & Cookies</h2>
