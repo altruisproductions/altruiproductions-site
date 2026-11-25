@@ -82,23 +82,42 @@ module.exports = async function contact(request, response) {
   const { RESEND_API_KEY: apiKey, CONTACT_FROM_EMAIL: from, CONTACT_TO_EMAIL: to } = process.env;
   if (!apiKey || !from || !to) return response.status(503).json({ code: 'unavailable' });
 
-  const format = body.photo;
-  if (format != null && (typeof format !== 'string' || !Object.hasOwn(photoTypes, format))) {
-    return response.status(400).json({ code: 'photoType' });
-  }
   if (body.step !== 'upload' && body.step !== 'send') {
     return response.status(400).json({ code: 'invalid' });
   }
 
-  const detailsHash = createHash('sha256').update(JSON.stringify([email, subject, message, video])).digest('hex');
-  const pathname = format == null ? null : `contact/${id}/${detailsHash}.${format}`;
+  // Keep the single-photo request format working for already-open pages.
+  const legacyFormat = body.photos === undefined ? body.photo : null;
+  let photos = [];
+  if (legacyFormat != null) {
+    if (typeof legacyFormat !== 'string' || !Object.hasOwn(photoTypes, legacyFormat)) {
+      return response.status(400).json({ code: 'photoType' });
+    }
+  } else if (body.photos !== undefined) {
+    if (!Array.isArray(body.photos) || body.photos.some((photo) => (
+      !photo || typeof photo.format !== 'string' || !Object.hasOwn(photoTypes, photo.format) ||
+      !Number.isSafeInteger(photo.size) || photo.size < 12
+    ))) {
+      return response.status(400).json({ code: 'photoType' });
+    }
+    photos = body.photos.map(({ format, size }) => ({ format, size }));
+  }
+
+  const totalSize = photos.reduce((total, photo) => total + photo.size, 0);
+  if (totalSize > maxPhotoBytes) return response.status(413).json({ code: 'photoSize' });
+
+  const messageDetails = [email, subject, message, video];
+  if (photos.length) messageDetails.push(photos);
+  const detailsHash = createHash('sha256').update(JSON.stringify(messageDetails)).digest('hex');
+  const storageFormat = photos.length ? 'bin' : legacyFormat;
+  const pathname = storageFormat ? `contact/${id}/${detailsHash}.${storageFormat}` : null;
   if (body.step === 'upload') {
     if (!pathname) return response.status(400).json({ code: 'photoType' });
     try {
       const constraints = {
         pathname,
-        maximumSizeInBytes: maxPhotoBytes,
-        allowedContentTypes: [photoTypes[format]],
+        maximumSizeInBytes: totalSize || maxPhotoBytes,
+        allowedContentTypes: [photos.length ? 'application/octet-stream' : photoTypes[legacyFormat]],
         validUntil: Date.now() + 5 * 60_000
       };
       const token = await issueSignedToken({ ...constraints, operations: ['put'] });
@@ -146,8 +165,20 @@ module.exports = async function contact(request, response) {
       }
 
       if (bytes.length > maxPhotoBytes) return response.status(413).json({ code: 'photoSize' });
-      if (photoFormat(bytes) !== format) return response.status(400).json({ code: 'photoType' });
-      mail.attachments = [{ filename: `photo.${format}`, content: bytes.toString('base64') }];
+      if (photos.length && bytes.length !== totalSize) {
+        return response.status(400).json({ code: 'photoType' });
+      }
+
+      const attachments = [];
+      let offset = 0;
+      for (const { format, size } of (photos.length ? photos : [{ format: legacyFormat, size: bytes.length }])) {
+        const image = bytes.subarray(offset, offset + size);
+        if (photoFormat(image) !== format) return response.status(400).json({ code: 'photoType' });
+        const name = photos.length > 1 ? `photo-${attachments.length + 1}` : 'photo';
+        attachments.push({ filename: `${name}.${format}`, content: image.toString('base64') });
+        offset += size;
+      }
+      mail.attachments = attachments;
     }
 
     const payload = JSON.stringify(mail);

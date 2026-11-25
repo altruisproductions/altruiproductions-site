@@ -79,6 +79,10 @@ body:has(.contact-dialog) .studio-home {
   letter-spacing: -.025em;
 }
 
+.contact-heading {
+  margin-bottom: 1rem;
+}
+
 .contact-close {
   flex: none;
   width: 44px;
@@ -91,25 +95,6 @@ body:has(.contact-dialog) .studio-home {
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-}
-
-.contact-language {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-  margin: .5rem 0 1.15rem;
-  color: #c1cde0;
-  font-size: .875rem;
-}
-
-.contact-language select {
-  max-width: 55%;
-  padding: .26rem .4rem;
-  border: 1px solid #43516c;
-  border-radius: 7px;
-  background: #101927;
-  color: #e7eefb;
-  font: inherit;
 }
 
 .contact-form,
